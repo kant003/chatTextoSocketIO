@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <button id="connect">Conectarse al servidor</button>
+    <br/>
+    <input id="msg" type="text"> <button id="send">Enviar</button>
+    <br/>
+    <div id="chat">....</div>
+    <script>
+        let socket;
+        document.getElementById('connect').addEventListener('click',connect)
+        function connect(e){
+            e.preventDefault();
+            socket=io('http://localhost:3000')
+
+            socket.on('texto',texto => {
+                console.log('llega',texto)
+                document.getElementById('chat').innerHTML='<br/>'+texto
+                +document.getElementById('chat').innerHTML
+            }) 
+            
+        }
+        document.getElementById('send').addEventListener('click', send)
+        function send(e){
+            e.preventDefault();
+            console.log(document.getElementById('msg').value)
+            socket.emit('frase',document.getElementById('msg').value)
+        }
+       
+    </script>
+</body>
+</html>
